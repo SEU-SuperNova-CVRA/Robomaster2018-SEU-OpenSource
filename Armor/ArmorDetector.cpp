@@ -13,14 +13,18 @@ using namespace cv::ml;
 
 namespace rm
 {
-/*
-*	To make sure that -45 <= angle < 45
-*/
+
 enum
 {
 	WIDTH_GREATER_THAN_HEIGHT,
 	ANGLE_TO_UP
 };
+/*
+*	@Brief:		// regulate the rotated rect
+*	@Input:		// rotated rec
+*				// regulation mode
+*	@Return:	// regulated rec
+*/
 cv::RotatedRect& adjustRec(cv::RotatedRect& rec, const int mode)
 {
 	using std::swap;
@@ -202,11 +206,6 @@ void ArmorDetector::loadImg(const cv::Mat & srcImg)
 #endif // DEBUG_DETECTION
 }
 
-//int thres = 190;
-//static void on_th(int th, void *)
-//{
-//	thres = th;
-//}
 
 int ArmorDetector::detect()
 {
@@ -463,14 +462,13 @@ int ArmorDetector::detect()
     cvex::showContour(_debugWindowName, _debugImg, _debugImg, intVertex, cvex::GREEN, -1, _roi.tl());
 #endif //DEBUG_DETECTION
 
-	//std::cout << "armor detected" << endl;
 	return _flag = ARMOR_LOCAL;
 }
 
 bool ArmorDescriptor::isArmorPattern() const
 {
+//    // cut the central part of the armor
 //    Mat regulatedImg;
-//    //TODO: 只截取中间部分，对大装甲板要同样有效
 //    if(type == BIG_ARMOR)
 //    {
 //        regulatedImg = frontImg(Rect(21, 0, 50, 50));
@@ -494,7 +492,11 @@ bool ArmorDescriptor::isArmorPattern() const
 //    int result = (int)svm->predict(data);
 //    if(result == 1) return true;
 //    else return false;
-    return true;
+	
+	
+	// to test the svm, uncomment the code block above
+	// and comment the code below
+	return true
 }
 
 

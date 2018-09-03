@@ -1,11 +1,39 @@
-﻿#pragma once
+﻿/**************************************************************
+
+MIT License
+
+Copyright (c) 2018 SEU-SuperNova-CVRA
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Authors:	Rick_Hang, <213162574@seu.edu.cn>
+			BinYan Hu
+**************************************************************/
+
+#pragma once
 #include<opencv2/opencv.hpp>
 #include<array>
 #include"../General/General.h"
 #include<opencv2/ml.hpp>
 
 //#define DEBUG_PRETREATMENT
-#define DEBUGDETECTION
+#define DEBUG_DETECTION
 //#define DEBUG_PAIR
 //#define DEBUG_PATTERN
 #define SHOW_RESULT
@@ -171,11 +199,9 @@ public:
 	std::vector<cv::Point2f> vertex;	//装甲板左右灯柱内侧四边形	
     cv::Mat frontImg;	//由vertex透视变换后得到的正视图,1 channel gray img
 
-	/*
-	*	0 -> small
-	*	1 -> big
-	*	-1 -> unkown
-	*/
+	//	0 -> small
+	//	1 -> big
+	//	-1 -> unkown
 	int type;
 };
 
@@ -187,7 +213,7 @@ public:
     ~ArmorDetector(){}
 
 	/*
-	*	Initialize with parameters
+	*	@Brief: Initialize with parameters
 	*/
 	void init(const ArmorParam& armorParam);
 
@@ -202,7 +228,7 @@ public:
 
 	/*
 	*	@Brief: load image and set tracking roi
-	*	@Input @srcImg: color image
+	*	@Input: srcImg
 	*/
 	void loadImg(const cv::Mat&  srcImg);
 
@@ -235,7 +261,6 @@ public:
 
 #if defined(DEBUG_DETECTION) || defined(SHOW_RESULT)
 	void showDebugImg() const;
-	cv::Mat getDebugImg();
 #endif // DEBUG_DETECTION || SHOW_RESULT
 
 private:
