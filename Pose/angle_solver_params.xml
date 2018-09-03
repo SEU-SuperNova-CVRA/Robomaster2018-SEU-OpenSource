@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<Y_DISTANCE_BETWEEN_GUN_AND_CAM>0.</Y_DISTANCE_BETWEEN_GUN_AND_CAM>
+<CAMERA_MARTRIX_1 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.0391876564768361e+03 0. 9.4661629904337065e+02 0.
+    1.0349035035562770e+03 5.3417040085263443e+02 0. 0. 1.</data></CAMERA_MARTRIX_1>
+<CAMERA_MARTRIX_2 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.0382847225196090e+03 0. 9.3531703201491598e+02 0.
+    1.0362297674685799e+03 5.2381184997923003e+02 0. 0. 1.</data></CAMERA_MARTRIX_2>
+<CAMERA_MARTRIX_3 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    9.0654312230000005e+02 0. 9.1042422078308505e+02 0.
+    9.0615167435977605e+02 5.4021265814906599e+02 0. 0. 1.</data></CAMERA_MARTRIX_3>
+<CAMERA_MARTRIX_4 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.0535111812690100e+03 0. 9.8021079994075797e+02 0.
+    1.0502547647878100e+03 5.0734724259587301e+02 0. 0. 1.</data></CAMERA_MARTRIX_4>
+<CAMERA_MARTRIX_5 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    9.0727852395266996e+02 0. 9.3038434944896596e+02 0.
+    9.1083076590026599e+02 5.4833111051079095e+02 0. 0. 1.</data></CAMERA_MARTRIX_5>
+<CAMERA_MARTRIX_0 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.2756730531909400e+03 0. 6.1708218538185099e+02 0.
+    1.2844540747103199e+03 4.2436723248877701e+02 0. 0. 1.</data></CAMERA_MARTRIX_0>
+<CAMERA_MARTRIX_6 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.0719466550585901e+03 0. 9.7847790937957302e+02 0.
+    1.0755168499948800e+03 5.0410286852764000e+02 0. 0. 1.</data></CAMERA_MARTRIX_6>
+<CAMERA_MARTRIX_7 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.0693643925255799e+03 0. 9.8274950264502297e+02 0.
+    1.0691273576306601e+03 5.4380089217006503e+02 0. 0. 1.</data></CAMERA_MARTRIX_7>
+<CAMERA_MARTRIX_8 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.0669535718564200e+03 0. 9.2940878812239600e+02 0.
+    1.0730417563637600e+03 4.5064591204631802e+02 0. 0. 1.</data></CAMERA_MARTRIX_8>
+<CAMERA_MARTRIX_9 type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    2.2048432467002999e+03 0. 9.4213364509488201e+02 0.
+    2.2028210179117700e+03 4.8550455126774699e+02 0. 0. 1.</data></CAMERA_MARTRIX_9>
+<CAMERA_MARTRIX_OFFICIAL type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.0325505929263200e+03 0. 9.7584998258476401e+02 0.
+    1.0323232822203699e+03 5.6652970462024098e+02 0. 0. 1.</data></CAMERA_MARTRIX_OFFICIAL>
+<DISTORTION_COEFF_1 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -2.6499999999999999e-02 7.0300000000000001e-02
+    -2.3000000000000000e-03 -4.7000000000000002e-03 0.</data></DISTORTION_COEFF_1>
+<DISTORTION_COEFF_2 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -4.4999999999999998e-02 1.2730000000000000e-01
+    -1.6999999999999999e-03 -2.8000000000000000e-03 0.</data></DISTORTION_COEFF_2>
+<DISTORTION_COEFF_3 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    3.3099999999999997e-02 8.5000000000000006e-03
+    -2.0999999999999999e-03 -7.4999999999999997e-03 0.</data></DISTORTION_COEFF_3>
+<DISTORTION_COEFF_4 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -6.1499999999999999e-02 1.7519999999999999e-01
+    1.2545000000000001e-04 -1.6999999999999999e-03 0.</data></DISTORTION_COEFF_4>
+<DISTORTION_COEFF_5 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    4.8368764712825800e-02 -5.5324290030714603e-02
+    -1.8840124234171501e-03 -2.8019009075403898e-04 0.</data></DISTORTION_COEFF_5>
+<DISTORTION_COEFF_0 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    7.6336077129147001e-02 5.0890560599796797e-02 6.8410002424278103e-03
+    -6.3674980640115999e-03 0.</data></DISTORTION_COEFF_0>
+<DISTORTION_COEFF_6 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -4.0317271219734602e-01 1.8732611634476501e-01
+    -6.0261632862274300e-04 3.3077055776573597e-04 0.</data></DISTORTION_COEFF_6>
+<DISTORTION_COEFF_7 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -4.0774568818974699e-01 1.8955055660183801e-01
+    -2.5099250679188000e-03 4.2984337983608003e-04 0.</data></DISTORTION_COEFF_7>
+<DISTORTION_COEFF_8 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -3.5103461424088001e-01 9.9624957307722001e-02
+    4.4683587861765401e-03 4.4956942401221398e-03 0.</data></DISTORTION_COEFF_8>
+<DISTORTION_COEFF_9 type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -3.3894509882317098e-01 3.2551131981746903e-02
+    3.5362820764055702e-04 2.5172878988676201e-03 0.</data></DISTORTION_COEFF_9>
+<DISTORTION_COEFF_OFFICIAL type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+    -2.1829999999999999e-01 5.8200000000000002e-02
+    -3.9250000000000000e-04 -6.2120000000000003e-04 0.</data></DISTORTION_COEFF_OFFICIAL>
+</opencv_storage>

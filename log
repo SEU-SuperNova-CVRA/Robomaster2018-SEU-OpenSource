@@ -1,0 +1,2 @@
+g++ -g -Wall -DOPENCV --std=c++11 -I.  -o ./Release/Test.o -c Armor/test_armor.cpp
+g++ -o ./Release/Robomaster.out ./Release/opencv_extended.o ./Release/ArmorDetector.o ./Release/numeric_rm.o ./Release/Chariot.o ./Release/AngleSolver.o ./Release/Rune.o ./Release/Test.o -Wl,-rpath,./ -L./ -L/usr/local/cuda/lib -lcuda -lcudart  -lpthread -ldarknet -lrt -lv4l2 `pkg-config opencv --libs` 
