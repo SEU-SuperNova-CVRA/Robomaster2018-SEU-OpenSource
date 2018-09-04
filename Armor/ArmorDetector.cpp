@@ -1,4 +1,31 @@
-﻿#include"ArmorDetector.h"
+﻿/**************************************************************
+
+MIT License
+
+Copyright (c) 2018 SEU-SuperNova-CVRA
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Authors:	Rick_Hang, <213162574@seu.edu.cn>
+			BinYan Hu
+**************************************************************/
+#include"ArmorDetector.h"
 #include<iostream>
 #include<vector>
 #include<math.h>
@@ -156,7 +183,7 @@ ArmorDetector::ArmorDetector()
 
 #if defined(DEBUG_DETECTION) || defined(SHOW_RESULT)
     _debugWindowName = "debug info";
-#endif // DEBUG_DETECTION
+#endif // DEBUG_DETECTION || SHOW_RESULT
 }
 
 ArmorDetector::ArmorDetector(const ArmorParam & armorParam)
@@ -168,7 +195,7 @@ ArmorDetector::ArmorDetector(const ArmorParam & armorParam)
 
 #if defined(DEBUG_DETECTION) || defined(SHOW_RESULT)
 	_debugWindowName = "debug info";
-#endif // DEBUG_DETECTION
+#endif // DEBUG_DETECTION || SHOW_RESULT
 }
 
 void ArmorDetector::init(const ArmorParam &armorParam)
@@ -182,7 +209,7 @@ void ArmorDetector::loadImg(const cv::Mat & srcImg)
 
 #if defined(DEBUG_DETECTION) || defined(SHOW_RESULT)
 	_debugImg = srcImg.clone();
-#endif // DEBUG_DETECTION
+#endif // DEBUG_DETECTION || SHOW_RESULT
 
 	Rect imgBound = Rect(cv::Point(0, 0), _srcImg.size());
 
@@ -202,7 +229,6 @@ void ArmorDetector::loadImg(const cv::Mat & srcImg)
 
 #ifdef DEBUG_DETECTION
 	rectangle(_debugImg, _roi, cvex::YELLOW);
-	//imshow(_debugWindowName, _debugImg);
 #endif // DEBUG_DETECTION
 }
 
@@ -227,10 +253,10 @@ int ArmorDetector::detect()
         cv::Mat element = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
         dilate(binBrightImg, binBrightImg, element);
 
-    //#ifdef DEBUG_PRETREATMENT
-        //imshow("brightness_binary", binBrightImg);
-        //waitKey();
-    //#endif // DEBUG_PRETREATMENT
+    #ifdef DEBUG_PRETREATMENT
+        imshow("brightness_binary", binBrightImg);
+        waitKey();
+    #endif // DEBUG_PRETREATMENT
 
 		/*
 		*	find and filter light bars
@@ -325,11 +351,11 @@ int ArmorDetector::detect()
 				const LightDescriptor& leftLight  = lightInfos[i];
 				const LightDescriptor& rightLight = lightInfos[j];
 
-			#if (defined DEBUG_DETECTION) && (defined DEBUG_PAIR)
+			#if (defined DEBUG_DETECTION)
 				Mat pairImg = _debugImg.clone();
 				vector<RotatedRect> curLightPair{leftLight.rec(), rightLight.rec()};
                 cvex::showRectangles("debug pairing",  pairImg, pairImg,curLightPair, cvex::CYAN, 1, _roi.tl());
-			#endif // DEBUG_DETECTION && DEBUG_PAIR
+			#endif // DEBUG_DETECTION
 
 				/*
 				*	此处只针对2-3M以内情况较好的判断
@@ -371,7 +397,7 @@ int ArmorDetector::detect()
 				// rotation 正比于 ratio_off & y_off
 				float ratiOff = (armorType == BIG_ARMOR) ? max(_param.armor_big_armor_ratio - ratio, float(0)) : max(_param.armor_small_armor_ratio - ratio, float(0));
 				float yOff = yDiff / meanLen;
-				float rotationScore = ratiOff * ratiOff + yOff * yOff;
+				float rotationScore = -(ratiOff * ratiOff + yOff * yOff);
 
 				ArmorDescriptor armor(leftLight, rightLight, armorType, _grayImg, rotationScore, _param);
 				_armors.emplace_back(armor);
@@ -460,7 +486,7 @@ int ArmorDetector::detect()
 		intVertex.emplace_back(fuckPoint);
 	}
     cvex::showContour(_debugWindowName, _debugImg, _debugImg, intVertex, cvex::GREEN, -1, _roi.tl());
-#endif //DEBUG_DETECTION
+#endif //DEBUG_DETECTION || SHOW_RESULT
 
 	return _flag = ARMOR_LOCAL;
 }
@@ -508,16 +534,6 @@ const std::vector<cv::Point2f> ArmorDetector::getArmorVertex() const
 		realVertex.emplace_back(Point2f(_targetArmor.vertex[i].x + _roi.tl().x, 
 										_targetArmor.vertex[i].y + _roi.tl().y));
 	}
-
-//#ifdef DEBUG_DETECTION
-//	for(int i = 0; i < 3; i++)
-//	{
-//		cv::line(_srcImg, realVertex[i], realVertex[i + 1], cvex::BLUE);
-//	}
-//	cv::line(_srcImg, realVertex[3], realVertex[0], cvex::BLUE);
-//	imshow("vertex", _srcImg);
-//#endif // DEBUG_DETECTION
-
 	return realVertex;
 }
 
@@ -531,10 +547,5 @@ void ArmorDetector::showDebugImg() const
 {
 	imshow(_debugWindowName, _debugImg);
 }
-Mat ArmorDetector::getDebugImg()
-{
-	return _debugImg;
-}
 #endif // DEBUG_DETECTION || SHOW_RESULT
-
 }

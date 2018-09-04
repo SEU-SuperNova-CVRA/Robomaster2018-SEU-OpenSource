@@ -25,22 +25,38 @@ SOFTWARE.
 Authors:	Rick_Hang, <213162574@seu.edu.cn>
 			BinYan Hu
 **************************************************************/
-
 #pragma once
 #include<opencv2/opencv.hpp>
 #include<array>
 #include"../General/General.h"
 #include<opencv2/ml.hpp>
 
+/**************************************************************
+ * DEBUG_PRETREATMENT 	only shows the image after the simple pretreatment
+ * DEBUG_DETECTION		record the info of: 
+ * 					    // roi area													: yellow
+ * 						// all the possible light bars								: magenta
+ * 						// the possible light pairs(DEBUG_PAIR overlapped)			: cyan
+ * 						// the vertex of possible armor areas						: white
+ * 						// the vertex of result armor areas							: green
+ * SHOW_RESULT			only shows the detection result(show the vertex of armors)	: green
+ * GET_ARMOR_PIC		collect the samples of armor area
+ * 
+ * Notice:	1. all the macro definition can be used individually
+ * 			2. if you want to focus on particular part of processing, I suggest commenting all the
+ * 			   unrelated part of DEBUG_DETECTION in .cpp. Or you can just rewrite the debug interactive mode.
+ **************************************************************/
 //#define DEBUG_PRETREATMENT
-#define DEBUG_DETECTION
-//#define DEBUG_PAIR
-//#define DEBUG_PATTERN
+//#define DEBUG_DETECTION
 #define SHOW_RESULT
 //#define GET_ARMOR_PIC
 
 namespace rm
 {
+
+/*
+*	This struct store all parameters(svm excluded) of armor detection 
+*/
 struct ArmorParam
 {
 	//Pre-treatment
@@ -111,7 +127,7 @@ struct ArmorParam
 	}
 };
 
-/**
+/*
 *   This class describes the info of lights, including angle level, width, length, score
 */
 class LightDescriptor
@@ -135,6 +151,10 @@ public:
 		this->area = ld.area;
 		return *this;
 	}
+
+	/*
+	*	@Brief: return the light as a cv::RotatedRect object
+	*/
 	cv::RotatedRect rec() const
 	{
 		return cv::RotatedRect(center, cv::Size2f(width, length), angle);
@@ -149,7 +169,7 @@ public:
 };
 
 /*
-*  This class describes the armor information, including maximum bounding box, vertex and so on
+* 	This class describes the armor information, including maximum bounding box, vertex and so on
 */
 class ArmorDescriptor
 {
@@ -160,13 +180,14 @@ public:
 	ArmorDescriptor();
 
 	/*
-	*	@Brief: calculate the rest information(except for match&final score)of ArmroDescriptor based on:
+	*	@Brief: calculate the rest of information(except for match&final score)of ArmroDescriptor based on:
 				l&r light, part of members in ArmorDetector, and the armortype(for the sake of saving time)
 	*	@Calls: ArmorDescriptor::getFrontImg()
 	*/
 	ArmorDescriptor(const LightDescriptor& lLight, const LightDescriptor& rLight, const int armorType, const cv::Mat& srcImg, const float rotationScore, ArmorParam param);
 
 	/*
+	*	@Brief: empty the object
 	*	@Called :ArmorDetection._targetArmor
 	*/
 	void clear()
@@ -182,6 +203,11 @@ public:
 		type = UNKNOWN_ARMOR;
 	}
 
+	/*
+	*	@Brief: get the front img(prespective transformation) of armor(if big, return the middle part)
+	*	@Inputs: grayImg of roi
+	*	@Outputs: store the front img to ArmorDescriptor's public
+	*/
 	void getFrontImg(const cv::Mat& grayImg);
 
 	/*
@@ -191,13 +217,13 @@ public:
 
 public:
 	std::array<cv::RotatedRect, 2> lightPairs; //0 left, 1 right
-	float rotationScore;	//旋转评分
-	float sizeScore;		//尺度评分
-	float distScore;		//距离评分
-	float finalScore;		//最终评分
+	float rotationScore;	//S3 = 
+	float sizeScore;		//S1 = e^(size)
+	float distScore;		//S2 = e^(-offset)
+	float finalScore;		//S3 = -(ratio^2 + yDiff^2)
 	
-	std::vector<cv::Point2f> vertex;	//装甲板左右灯柱内侧四边形	
-    cv::Mat frontImg;	//由vertex透视变换后得到的正视图,1 channel gray img
+	std::vector<cv::Point2f> vertex;	//four vertex of armor area, lihgt bar area exclued!!	
+    cv::Mat frontImg;	//front img after prespective transformation from vertex,1 channel gray img
 
 	//	0 -> small
 	//	1 -> big
@@ -205,33 +231,15 @@ public:
 	int type;
 };
 
+/*
+*	This class implement all the functions of detecting the armor
+*/
 class ArmorDetector
 {
 public:
-    ArmorDetector();
-	ArmorDetector(const ArmorParam& armorParam);
-    ~ArmorDetector(){}
-
 	/*
-	*	@Brief: Initialize with parameters
+	*	flag for the detection result
 	*/
-	void init(const ArmorParam& armorParam);
-
-	/*
-	*	@Brief: 设置目标颜色
-	*/
-	void setEnemyColor(int enemy_color)
-	{
-		_enemy_color = enemy_color;
-		_self_color = enemy_color == BLUE ? RED : BLUE;
-	}
-
-	/*
-	*	@Brief: load image and set tracking roi
-	*	@Input: srcImg
-	*/
-	void loadImg(const cv::Mat&  srcImg);
-
 	enum ArmorFlag
 	{
 		ARMOR_NO = 0,		//没找到
@@ -239,23 +247,55 @@ public:
 		ARMOR_GLOBAL = 2,	//全局检测得到装甲板
 		ARMOR_LOCAL = 3		//局部（跟踪）得到装甲板
 	};
+	
+public:
+    ArmorDetector();
+	ArmorDetector(const ArmorParam& armorParam);
+    ~ArmorDetector(){}
 
 	/*
-	*	@Brief: 初步检测出所有可能的装甲板,此处“可能”的意思是仅从形态角度的可能
-	*	@Function: 将armor的Armordesciptor存在ArmorDetection的私有变量里
+	*	@Brief: Initialize the armor parameters
+	*	@Others: API for client
+	*/
+	void init(const ArmorParam& armorParam);
+
+	/*
+	*	@Brief: set the enemy's color
+	*	@Others: API for client
+	*/
+	void setEnemyColor(int enemy_color)
+	{
+		_enemy_color = enemy_color;init
+		_self_color = enemy_color == BLUE ? RED : BLUE;
+	}
+
+	/*
+	*	@Brief: load image and set tracking roi 
+	*	@Input: frame
+	*	@Others: API for client
+	*/
+	void loadImg(const cv::Mat&  srcImg);
+
+	/*
+	*	@Brief: core of detection algrithm, include all the main detection process
+	*	@Outputs: ALL the info of detection result
 	*	@Return: See enum ArmorFlag
+	*	@Others: API for client
 	*/
     int detect();
 
 	/*
-	*	@Brief：输出装甲板的四角点
-	*	@Output: 角点顺序left-top, right-top, right-bottom, left-bottom
+	*	@Brief: get the vertex of armor 
+	*	@Return: vector of four cv::point2f object
+	*	@Notice: Order->left-top, right-top, right-bottom, left-bottom
+	*	@Others: API for client
 	*/
 	const std::vector<cv::Point2f> getArmorVertex() const;
 
 	/*
 	*	@Brief: returns the type of the armor
 	*	@Return: 0 for small armor, 1 for big armor
+	*	@Others: API for client
 	*/
     int getArmorType() const;
 
@@ -270,9 +310,9 @@ private:
 
 	cv::Rect _roi;		//相对坐标
 
-	cv::Mat _srcImg;	//源图像
-	cv::Mat _roiImg;	//每次处理的roi
-	cv::Mat _grayImg;	//gray of roi image
+	cv::Mat _srcImg;	//source img
+	cv::Mat _roiImg;	//roi from the result of last frame
+	cv::Mat _grayImg;	//gray img of roi
 
 	int _trackCnt = 0;
 	
