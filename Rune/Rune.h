@@ -1,3 +1,33 @@
+/**************************************************************
+
+MIT License
+
+Copyright (c) 2018 SEU-SuperNova-CVRA
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Authors:	Shi Shu, <213162637@seu.edu.cn>
+            BinYan Hu
+            Su ChenHao
+            Cui RenJie
+            Sun BoWen
+**************************************************************/
 #pragma once
 
 #include"../General/singleton.hpp"
@@ -6,67 +36,23 @@
 #include<opencv2/opencv.hpp>
 #include<array>
 
-//#define SHOW_PRETREAT						/*展示预处理的过程*/
-//#define SHOW_FIRST_FILTER_PROCESS			/*展示第一次过滤轮廓的过程*/
-//#define SHOW_FIRST_FILTERED_RESULT		/*展示第一次过滤后的结果*/
-//#define SHOW_TWICE_FILTER_PROCESS			/*展示第二次过滤轮廓的过程*/
-//#define SHOW_TWICE_FILTERED_RESULT		/*展示第二次过滤后的结果*/
-//#define SHOW_FIND_LED						/*展示找LED的过程*/
-
-//#define DEBUG_FULL
-//#define DEBUG_NUM
+//#define SHOW_PRETREAT						/*to show the process of pretreat*/
+//#define SHOW_FIND_LED						/*to show the process of finding led*/
+//#define DEBUG_FULL                        /*to show the process of detecting rune*/
+//#define DEBUG_NUM                         /*to show the result of caculating numbers*/
 
 
-#define DEBUG_GET_EVERYTHING
-//#define CASUAL_SET_NUMBER
+#define DEBUG_GET_EVERYTHING                /*to get mumbers of classes*/
+//#define CASUAL_SET_NUMBER                 /*to set led numbers and rune numbers while debugging*/
 
 namespace rm
 {
-
+/*
+ * this class contains all possibly modified parameters which may be used at the playing field
+*/
 	class RuneParam
 	{
 	public:
-		/*RuneParam(int _category)
-		{
-			if (_category)
-			{
-				hsv_h_min = 0;							
-				hsv_h_max = 34;							
-				hsv_s_min = 43;							
-				hsv_s_max = 255;						
-				hsv_v_min = 150;						
-				hsv_v_max = 255;						
-
-				contour_min_area = 130;							
-				contour_boundingrect_min_aspect_ratio = 0.25;	
-				contour_boundingrect_max_aspect_ratio = 4;		
-				contour_boundingrect_min_area = 200;			
-				contour_boundingrect_max_area = 3000;			
-
-				y_direction_dx_max_width_rate = 0.5;			
-				y_direction_dy_max_height_rate = 2.5;			
-				x_direction_dx_min_height_rate = 1.5;			
-				x_direction_dx_max_height_rate = 3.5;			
-				x_direction_dy_max_height_rate = 1.0;			
-				centers_max_sin_theta = 0.30;					
-			}
-			else
-			{
-				 contour_min_area = 130;
-				 contour_boundingrect_min_aspect_ratio = 0.25;
-				 contour_boundingrect_max_aspect_ratio = 4;
-				 contour_boundingrect_min_area = 200;
-				 contour_boundingrect_max_area = 3000;
-
-				 y_direction_dx_max_width_rate = 0.5;
-				 y_direction_dy_max_height_rate = 2.5;
-				 x_direction_dx_min_height_rate = 1.5;
-				 x_direction_dx_max_height_rate = 3.5;
-				 x_direction_dy_max_height_rate = 1.0;
-				 centers_max_sin_theta = 0.30;
-
-			}
-		}*/
 		RuneParam(const int _hsv_h_min = 0,
 			const int _hsv_h_max = 34,
 			const int _hsv_s_min = 43,
@@ -192,6 +178,9 @@ namespace rm
 		*/
 		cv::Point2f chooseTarget();
 
+        /*
+        *	@brief reset parameters
+        */
         void resetPara();
 
 		bool isShoot(bool shootSituation)
@@ -235,6 +224,9 @@ namespace rm
 #endif // DEBUG_GET_EVERYTHING
 
 	private:
+        /*
+        *	this blob contains the contours' characters found after findContours()
+        */
 		struct Blob
 		{
 			Blob() = default;
