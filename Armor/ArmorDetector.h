@@ -45,6 +45,7 @@ Authors:	Rick_Hang, <213162574@seu.edu.cn>
  * Notice:	1. all the macro definition can be used individually
  * 			2. if you want to focus on particular part of processing, I suggest commenting all the
  * 			   unrelated part of DEBUG_DETECTION in .cpp. Or you can just rewrite the debug interactive mode.
+ * 			3. remeber to change the path of pictures if using GET_ARMOR_PIC
  **************************************************************/
 //#define DEBUG_PRETREATMENT
 //#define DEBUG_DETECTION
@@ -242,12 +243,12 @@ public:
 	*/
 	enum ArmorFlag
 	{
-		ARMOR_NO = 0,		//没找到
-		ARMOR_LOST = 1,		//跟踪丢失
-		ARMOR_GLOBAL = 2,	//全局检测得到装甲板
-		ARMOR_LOCAL = 3		//局部（跟踪）得到装甲板
+		ARMOR_NO = 0,		// not found
+		ARMOR_LOST = 1,		// lose tracking
+		ARMOR_GLOBAL = 2,	// armor found globally
+		ARMOR_LOCAL = 3		// armor found locally(in tracking mode)
 	};
-	
+
 public:
     ArmorDetector();
 	ArmorDetector(const ArmorParam& armorParam);
@@ -308,7 +309,7 @@ private:
 	int _enemy_color;
 	int _self_color;
 
-	cv::Rect _roi;		//相对坐标
+	cv::Rect _roi;		//relative coordinates
 
 	cv::Mat _srcImg;	//source img
 	cv::Mat _roiImg;	//roi from the result of last frame
@@ -318,7 +319,7 @@ private:
 	
 	std::vector<ArmorDescriptor> _armors;
 
-	ArmorDescriptor _targetArmor;		//相对坐标
+	ArmorDescriptor _targetArmor;		//relative coordinates
 
 	int _flag;
 	bool _isTracking;

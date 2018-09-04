@@ -241,8 +241,6 @@ int ArmorDetector::detect()
 	_armors.clear();
 	std::vector<LightDescriptor> lightInfos;
 	{
-		//cv::createTrackbar("threshold", "brightness_binary", &thres, 255, on_th);
-
 		/*
 		*	pre-treatment
 		*/
@@ -358,10 +356,9 @@ int ArmorDetector::detect()
 			#endif // DEBUG_DETECTION
 
 				/*
-				*	此处只针对2-3M以内情况较好的判断
-				*	形态相似：
-				*		平行
-				*		height大小相似
+				*	Works for 2-3 meters situation
+				*	morphologically similar: 	// parallel 
+												// similar height
 				*/
 				float angleDiff_ = abs(leftLight.angle - rightLight.angle);
 				float LenDiff_ratio = abs(leftLight.length - rightLight.length) / max(leftLight.length, rightLight.length);
@@ -372,9 +369,8 @@ int ArmorDetector::detect()
 				}
 
 				/*
-				*	相对位置合适:
-				*		中心点y方向差距不大
-				*		长宽比在范围内
+				*	proper location:	// y value of light bar close enough 
+				*						// ratio of length and width is proper
 				*/
 				float dis = cvex::distance(leftLight.center, rightLight.center);
 				float meanLen = (leftLight.length + rightLight.length) / 2;
@@ -394,7 +390,6 @@ int ArmorDetector::detect()
 				// calculate pairs' info 
 				int armorType = ratio > _param.armor_big_armor_ratio ? BIG_ARMOR : SMALL_ARMOR;
 				// calculate the rotation score
-				// rotation 正比于 ratio_off & y_off
 				float ratiOff = (armorType == BIG_ARMOR) ? max(_param.armor_big_armor_ratio - ratio, float(0)) : max(_param.armor_small_armor_ratio - ratio, float(0));
 				float yOff = yDiff / meanLen;
 				float rotationScore = -(ratiOff * ratiOff + yOff * yOff);
