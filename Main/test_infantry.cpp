@@ -161,8 +161,6 @@ void ImgProdCons::consume()
 
             _runeDetectorPtr->setMode(rm::MINI_RUNE, rm::RuneParam());
 
-
-
             //First step: load img
             _runeDetectorPtr->loadImg(frame.img);
 
@@ -174,21 +172,6 @@ void ImgProdCons::consume()
             runeFlag = _runeDetectorPtr->caculate();
             if(runeFlag == rm::RuneDetector::RUNE_NO)
             {
-                //                //this part for test
-                //                controlData.frame_seq   = frame.seq;
-                //                controlData.shoot_mode  = Serial::SINGLE_FIRE | Serial::HIGH_SPEED;
-                //                controlData.pitch_dev   = 0;
-                //                controlData.yaw_dev     = 0;
-                //                //try to send control data
-                //                if(_serialPtr->tryControl(controlData, chrono::milliseconds(3)) == Serial::OJBK)
-                //                {
-                //                    //TODO:maybe need some time to let button fly
-                //                    this_thread::sleep_for(chrono::milliseconds(1200));
-                //                }
-                //                else
-                //                {
-                //                    cout<<"not sent"<<endl;
-                //                }
                 continue;
             }
 

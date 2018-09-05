@@ -407,65 +407,34 @@ void RuneDetector::preScreen()
 			continue;
 		//filteredRects_.push_back(rect);
 
-	//填充轮廓，并放进mask里
-		mask = cv::Mat::zeros(rect.size(), CV_8UC1);
-		cv::drawContours(mask, contours_, idx, 255, CV_FILLED, 8, hierachy_, 100, cv::Point2f(-rect.x, -rect.y));
-	#ifdef SHOW_FIRST_FILTER_PROCESS
-		cv::imshow("mask", mask);
-		cv::waitKey(1);
-	#endif // SHOW_FIRST_FILTER_PROCESS
+        cv::Point2f center = (rect.tl() + rect.br()) / 2;
+        float height = rect.height;
+        float width = rect.width;
+        float area = cv::contourArea(contours_[idx]);
+        if(hierachy_[idx][2] != -1)								/*如果有子轮廓*/
+        {
+            int idxnext = hierachy_[idx][2];
+            area -= cv::contourArea(contours_[idxnext]);			/*首先删除子轮廓的大小*/
+            while(hierachy_[idxnext][0] != -1)					/*如果子轮廓有同级轮廓，*/
+            {
+                idxnext = hierachy_[idxnext][0];
+                area -= cv::contourArea(contours_[idxnext]);		/*则该轮廓所占的大小为自己减去所有同级轮廓的大小*/
+            }
 
-		//统计轮廓内的白点数和黑点数
-		int white = 0;
-		int black = 0;
-		for(int x = 0; x < rect.width; ++x)
-		{
-			for(int y = 0; y < rect.height; ++y)
-			{
-				//std::cout << (int)mask.at<uchar>(y, x) << std::endl;
-				//判断这个点是否再轮廓内
-				if((int)mask.at<uchar>(y, x) == 255)
-				{
-					if((int)workImg_.at<uchar>(rect.y + y, rect.x + x) == 255)
-						white++;
-					else
-						black++;
-				}
-			}
-		}
-		//std::cout << white << "\t" << black << "\t" << (float)black / (float)(white + black) << std::endl;
+        }
+        if(area < params_.contour_min_area)
+            continue;
+        filteredRects_.push_back(rect);
 
-//		if((float)black / (float)(white + black) < 0.5 || runeMode_ != rm::MINI_RUNE)
-//		{
-			cv::Point2f center = (rect.tl() + rect.br()) / 2;
-			float height = rect.height;
-			float width = rect.width;
-			float area = cv::contourArea(contours_[idx]);
-			if(hierachy_[idx][2] != -1)								/*如果有子轮廓*/
-			{
-				int idxnext = hierachy_[idx][2];
-				area -= cv::contourArea(contours_[idxnext]);			/*首先删除子轮廓的大小*/
-				while(hierachy_[idxnext][0] != -1)					/*如果子轮廓有同级轮廓，*/
-				{
-					idxnext = hierachy_[idxnext][0];
-					area -= cv::contourArea(contours_[idxnext]);		/*则该轮廓所占的大小为自己减去所有同级轮廓的大小*/
-				}
+#ifdef SHOW_FIRST_FILTER_PROCESS
+        cv::Mat dst1 = srcImg_.clone();
+        cv::rectangle(dst1, rect, cvex::RED, 2);
+        cv::imshow("filtering", dst1);
+        cv::waitKey(1);
+#endif // SHOW_FIRST_FILTER_PROCESS
 
-			}
-			if(area < params_.contour_min_area)
-				continue;
-			filteredRects_.push_back(rect);
-
-		#ifdef SHOW_FIRST_FILTER_PROCESS
-			cv::Mat dst1 = srcImg_.clone();
-			cv::rectangle(dst1, rect, cvex::RED, 2);
-			cv::imshow("filtering", dst1);
-			cv::waitKey(1);
-		#endif // SHOW_FIRST_FILTER_PROCESS
-
-			blobs_.push_back(Blob{center, width, height, area});
-//		}
-	}
+        blobs_.push_back(Blob{center, width, height, area});
+    }
 
 }
 
@@ -486,9 +455,6 @@ void RuneDetector::findRune()
 			dealing_blobs_.erase(dealing_blobs_.begin());
 			finalBlobs_.push_back(baseBlob);				/*放入最后的Blob中*/
 			++countRect;
-			float ydist = 0.0;
-			float xdist = 0.0;
-
 		#ifdef SHOW_TWICE_FILTER_PROCESS
 			showSearching = srcImg_.clone();
 			//cv::drawMarker(showSearching, baseBlob.center, cvex::BLUE, cv::MARKER_SQUARE, 30, 2);
@@ -532,17 +498,6 @@ void RuneDetector::findRune()
 						cmpBlobIdx = blobs_.erase(cmpBlobIdx);
 						ischangeIdx = true;
 					}
-					/*else if (isFindyRect == true
-					&& rmnum::relApproxEqual(cvex::distanceManhattan(cmpCenter, basCenter), ydist, 0.1))
-					{
-					dealing_blobs_.push_back(*cmpBlobIdx);
-					cmpBlobIdx = blobs_.erase(cmpBlobIdx);
-					ischangeIdx = true;
-					isFindyRect = true;
-					cv::rectangle(showfindingrect, *cmpBlobIdx, cvex::GREEN, 2);
-					cv::imshow("searching", showfindingrect);
-					cv::waitKey(1);
-					}*/
 				}
 				//x方向找邻居。
 				else if(dy < baseBlob.height * params_.x_direction_dy_max_height_rate)
@@ -572,17 +527,6 @@ void RuneDetector::findRune()
 						cmpBlobIdx = blobs_.erase(cmpBlobIdx);
 						ischangeIdx = true;
 					}
-					/*else if (isFindxRect == true
-					&& rmnum::relApproxEqual(cvex::distanceManhattan(cmpCenter, basCenter), xdist, 0.1))
-					{
-					dealing_blobs_.push_back(*cmpBlobIdx);
-					cmpBlobIdx = blobs_.erase(cmpBlobIdx);
-					ischangeIdx = true;
-					isFindxRect = true;
-					cv::rectangle(showfindingrect, *cmpBlobIdx, cvex::GREEN, 2);
-					cv::imshow("searching", showfindingrect);
-					cv::waitKey(1);
-					}*/
 				}
 				if(!ischangeIdx) cmpBlobIdx++;
 			}
@@ -661,38 +605,6 @@ void RuneDetector::findRune()
 						cmpCount = nearCount;
 					}
 				}
-				/*y较大的中心为真正的中心
-				for (auto center : centerBlob)
-				{
-				if (center.coor.y > realCenter.coor.y)
-				realCenter = center;
-				}*/
-				//通过旁边的面积比较
-				//float cmpArea = 0.0;
-				//for (auto center : centerBlob)
-				//{
-				//	int nearCount = 0;
-				//	float avrArea = 0.0;
-				//	for (auto blob : finalBlobs_)
-				//	{
-				//		/*取中心blob的周围几个blob，求他们的平均area*/
-				//		if (std::abs(blob.coor.x - center.coor.x) <= 1 &&
-				//			std::abs(blob.coor.y - center.coor.y) <= 1)
-				//		{
-				//			std::cout << blob.area << "\t";
-				//			avrArea += blob.area;
-				//			++nearCount;
-				//		}
-				//	}
-				//	avrArea /= nearCount;
-				//	std::cout << "\n" << avrArea << std::endl << std::endl ;
-				//	;
-				//	if (avrArea > cmpArea)
-				//	{
-				//		realCenter = center;
-				//	}
-				//	cmpArea = avrArea;
-				//}
 			}
 			float x1_roi = 0;
 			float y1_roi = 0;
