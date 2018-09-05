@@ -1,4 +1,4 @@
-﻿/**************************************************************
+/**************************************************************
 
 MIT License
 
@@ -271,7 +271,7 @@ int ArmorDetector::detect()
 			adjustRec(lightRec, ANGLE_TO_UP);
 
 			//float solidity = lightContourArea / lightRec.size.area();
-            if(lightRec.size.width / lightRec.size.height > _param.light_max_ratio ||
+            		if(lightRec.size.width / lightRec.size.height > _param.light_max_ratio ||
 			   lightContourArea / lightRec.size.area() < _param.light_contour_min_solidity) continue;
 
 			//Mat temp;
@@ -294,8 +294,8 @@ int ArmorDetector::detect()
 			}
 			fillConvexPoly(lightMask, lightVertex, 255);
 
-            if(lightImg.size().area() <= 0 || lightMask.size().area() <= 0) continue;
-            cv::dilate(lightMask, lightMask, element);
+            		if(lightImg.size().area() <= 0 || lightMask.size().area() <= 0) continue;
+            		cv::dilate(lightMask, lightMask, element);
 			const Scalar meanVal = mean(lightImg, lightMask);
 
 			//Mat debugColorImg = _srcImg.clone();
@@ -349,16 +349,16 @@ int ArmorDetector::detect()
 				const LightDescriptor& leftLight  = lightInfos[i];
 				const LightDescriptor& rightLight = lightInfos[j];
 
-			#if (defined DEBUG_DETECTION)
+		#ifdef DEBUG_DETECTION
 				Mat pairImg = _debugImg.clone();
 				vector<RotatedRect> curLightPair{leftLight.rec(), rightLight.rec()};
-                cvex::showRectangles("debug pairing",  pairImg, pairImg,curLightPair, cvex::CYAN, 1, _roi.tl());
-			#endif // DEBUG_DETECTION
+                		cvex::showRectangles("debug pairing",  pairImg, pairImg,curLightPair, cvex::CYAN, 1, _roi.tl());
+		#endif // DEBUG_DETECTION
 
 				/*
 				*	Works for 2-3 meters situation
-				*	morphologically similar: 	// parallel 
-												// similar height
+				*	morphologically similar: // parallel 
+								 // similar height
 				*/
 				float angleDiff_ = abs(leftLight.angle - rightLight.angle);
 				float LenDiff_ratio = abs(leftLight.length - rightLight.length) / max(leftLight.length, rightLight.length);
@@ -369,8 +369,8 @@ int ArmorDetector::detect()
 				}
 
 				/*
-				*	proper location:	// y value of light bar close enough 
-				*						// ratio of length and width is proper
+				*	proper location: // y value of light bar close enough 
+				*			 // ratio of length and width is proper
 				*/
 				float dis = cvex::distance(leftLight.center, rightLight.center);
 				float meanLen = (leftLight.length + rightLight.length) / 2;
@@ -424,13 +424,13 @@ int ArmorDetector::detect()
 	_allCnt++;
 	int i = 0;
 	for(const auto & armor : _armors)
-    {
-        Mat regulatedFrontImg = armor.frontImg;
-        if(armor.type == BIG_ARMOR)
-        {
-            regulatedFrontImg = regulatedFrontImg(Rect(21, 0, 50, 50));
-        }
-        imwrite("/home/nvidia/Documents/ArmorTrainingSample/" + to_string(_allCnt) + "_" + to_string(i) + ".bmp", regulatedFrontImg);
+    	{
+        	Mat regulatedFrontImg = armor.frontImg;
+        	if(armor.type == BIG_ARMOR)
+        	{
+       		     	regulatedFrontImg = regulatedFrontImg(Rect(21, 0, 50, 50));
+        	}
+        	imwrite("/home/nvidia/Documents/ArmorTrainingSample/" + to_string(_allCnt) + "_" + to_string(i) + ".bmp", regulatedFrontImg);
 		i++;
 	}
 #endif // GET_ARMOR_PIC
@@ -480,7 +480,7 @@ int ArmorDetector::detect()
 		Point fuckPoint = point;
 		intVertex.emplace_back(fuckPoint);
 	}
-    cvex::showContour(_debugWindowName, _debugImg, _debugImg, intVertex, cvex::GREEN, -1, _roi.tl());
+   	cvex::showContour(_debugWindowName, _debugImg, _debugImg, intVertex, cvex::GREEN, -1, _roi.tl());
 #endif //DEBUG_DETECTION || SHOW_RESULT
 
 	return _flag = ARMOR_LOCAL;
