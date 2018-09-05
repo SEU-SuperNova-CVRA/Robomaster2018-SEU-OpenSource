@@ -51,59 +51,59 @@ initialized instance of `rm::AngleSolverParam`
 ---
 ### rm::AngleSolver.setTarget(const std::vector<cv::Point2f> objectPoints, int objectType) /setTarget(const cv::Point2f centerPoint, int objectType)
 set the center point or corners of armor, or the center of buff as target
-###Args:
+### Args:
 corner points(`vector`) or center point(`cv::Point2f`), and what the object is(`int`).
-###Returns:
+### Returns:
 `void`
 
 
 ---
 ### rm::AngleSolver.solve()
 solve the pose problem
-###Args:
+### Args:
 None
-###Returns:
+### Returns:
 `void`
 
 
 ---
 ### rm::AngleSlover.setResolution(const cv::Size2i& image_resolution)
 tell anglesolver the resolution of used image
-###Args:
+### Args:
 resolution of used image(`cv::Size2i`)
-###Returns:
+### Returns:
 `void`
 
 
 ---
 ### rm::AngleSlover.getCompensateAngle()
 get the error angle after compensated by the consider of gravity
-###Args:
+### Args:
 None
-###Returns:
+### Returns:
 const `cv::Vec2f` errAngle
 
 ---
 ### rm::AngleSlover.getAngle()
 get the error angle 
-###Args:
+### Args:
 None
-###Returns:
+### Returns:
 const `cv::Vec2f` errAngle
 
 ---
 ### rm::AngleSlover.getDistance()
 get the distance between the camera and the target
-###Args:
+### Args:
 None
-###Returns:
+### Returns:
 const `double` distance
 
 
 ---
-###rm::AngleSolver.setBulletSpeed(int bulletSpeed)
+### rm::AngleSolver.setBulletSpeed(int bulletSpeed)
 set the speed of bullet
-###Args:
+### Args:
 `int` bullet speed
-###Returns:
+### Returns:
 void
