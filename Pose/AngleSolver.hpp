@@ -10,7 +10,7 @@ namespace rm
 
 struct AngleSolverParam
 {
-	cv::Mat CAM_MATRIX;			// 相机内参
+	cv::Mat CAM_MATRIX;			// 
 	cv::Mat DISTORTION_COEFF;	//相机畸变参数
 	//三维坐标的单位是毫米 
 	static std::vector<cv::Point3f> POINT_3D_OF_ARMOR_BIG;
