@@ -22,7 +22,10 @@
 >4. 轮廓内的颜色是目标颜色
 
 其中,凸度(Solidity)定义为:
-![image](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/Img/CodeCogsEqn.png)
+
+![image](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/Img/CodeCogsEqn.png)  
+S_c : 灯柱轮廓的面积  
+S_f : 外包椭圆的面积  
 判断轮廓内部颜色采用遍历轮廓内部像素点,并统计颜色分布的方法。对矩形内的三通道分别取均值,若B-G > threshold则初步认为这可能是一个蓝色灯条,反之则为红色。最终对符合条件的灯条构建描述。
 #### 1.2.3 灯条匹配
 利用约束集对灯条进行两两匹配,筛选不可能成为装甲板的组合,同时为可能成为装甲板的区域评分。
