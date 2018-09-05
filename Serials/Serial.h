@@ -16,11 +16,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-Authors:    Shi Shu, <213162637@seu.edu.cn>
-            BinYan Hu
-            Su ChenHao
-            Cui RenJie
-            Sun BoWen
+Authors:    BinYan Hu
 **************************************************************/
 #pragma once
 
