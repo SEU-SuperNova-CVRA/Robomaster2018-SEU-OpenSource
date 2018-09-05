@@ -1,4 +1,4 @@
-<script> type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
 # Armor Detection
 ## 1. Algorithm Description
 ### 1.1 Overview
@@ -54,11 +54,11 @@ $$凸度 =\frac{轮廓面积}{拟合椭圆面积}$$
 
 为防止在跟踪过程中忽略了视跟踪视野外出现潜在评分最高的目标（最大威胁目标），需要在固定帧数后对全局进行一次目标再选择
 
-### 1.3 问题与缺陷
+### 1.4 问题与缺陷
 1. 相机条件限制，导致目前的算法根本无法处理高速目标（哨兵无法实现高速搜索目标）。
 2. 依靠亮度筛选灯条会过于依赖调参。
 3. 跟踪机制不健全,没有考虑到相对运动造成roi的偏移。
-### 1.4 TO DO
+### 1.5 TO DO
 1. 尝试使用更加高级以及更具鲁棒性的决策层，给自动瞄准加入灵魂
 2. 针对步兵和哨兵两种机器人采用不同的人机交互方式。对于全自动机器人需要全权给予决策权，对于决策的要求更高级更智能。而对于步兵需要设计出更加适应操作手的人机交互方式。
 3. 尝试cnn等深度学习方法进行分类／实现全局直接搜索装甲板图案
