@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 Authors:	Rick_Hang, <213162574@seu.edu.cn>
-			BinYan Hu
+		BinYan Hu
 **************************************************************/
 #pragma once
 #include<opencv2/opencv.hpp>
@@ -33,16 +33,16 @@ Authors:	Rick_Hang, <213162574@seu.edu.cn>
 
 /**************************************************************
  * DEBUG_PRETREATMENT 	only shows the image after the simple pretreatment
- * DEBUG_DETECTION		record the info of: 
- * 					    // roi area													: yellow
- * 						// all the possible light bars								: magenta
- * 						// the possible light pairs(DEBUG_PAIR overlapped)			: cyan
- * 						// the vertex of possible armor areas						: white
- * 						// the vertex of result armor areas							: green
- * SHOW_RESULT			only shows the detection result(show the vertex of armors)	: green
- * GET_ARMOR_PIC		collect the samples of armor area
+ * DEBUG_DETECTION	record the info of: 
+ * 				    	// roi area						: yellow
+ * 					// all the possible light bars				: magenta
+ * 					// the possible light pairs(DEBUG_PAIR overlapped)	: cyan
+ *					// the vertex of possible armor areas			: white
+ * 					// the vertex of result armor areas			: green
+ * SHOW_RESULT		only shows the detection result(show the vertex of armors)		: green
+ * GET_ARMOR_PIC	collect the samples of armor area
  * 
- * Notice:	1. all the macro definition can be used individually
+ * Notice:		1. all the macro definition can be used individually
  * 			2. if you want to focus on particular part of processing, I suggest commenting all the
  * 			   unrelated part of DEBUG_DETECTION in .cpp. Or you can just rewrite the debug interactive mode.
  * 			3. remeber to change the path of pictures if using GET_ARMOR_PIC
@@ -105,11 +105,11 @@ struct ArmorParam
 		light_max_angle = 45.0;
 		light_min_size = 5.0;
 		light_contour_min_solidity = 0.5;
-        light_max_ratio = 1.0;
+        	light_max_ratio = 1.0;
 
 		// Filter pairs
-        light_max_angle_diff_ = 7.0; //20
-        light_max_height_diff_ratio_ = 0.2; //0.5
+        	light_max_angle_diff_ = 7.0; //20
+        	light_max_height_diff_ratio_ = 0.2; //0.5
 		light_max_y_diff_ratio_ = 2.0; //100
 		light_min_x_diff_ratio_ = 0.5; //100
 
@@ -182,7 +182,7 @@ public:
 
 	/*
 	*	@Brief: calculate the rest of information(except for match&final score)of ArmroDescriptor based on:
-				l&r light, part of members in ArmorDetector, and the armortype(for the sake of saving time)
+			l&r light, part of members in ArmorDetector, and the armortype(for the sake of saving time)
 	*	@Calls: ArmorDescriptor::getFrontImg()
 	*/
 	ArmorDescriptor(const LightDescriptor& lLight, const LightDescriptor& rLight, const int armorType, const cv::Mat& srcImg, const float rotationScore, ArmorParam param);
@@ -214,7 +214,7 @@ public:
 	/*
 	*	@Return: if the centeral pattern belong to an armor
 	*/
-    bool isArmorPattern() const;
+    	bool isArmorPattern() const;
 
 public:
 	std::array<cv::RotatedRect, 2> lightPairs; //0 left, 1 right
@@ -223,8 +223,8 @@ public:
 	float rotationScore;		//S3 = -(ratio^2 + yDiff^2) 
 	float finalScore;		
 	
-	std::vector<cv::Point2f> vertex;	//four vertex of armor area, lihgt bar area exclued!!	
-    cv::Mat frontImg;	//front img after prespective transformation from vertex,1 channel gray img
+	std::vector<cv::Point2f> vertex; //four vertex of armor area, lihgt bar area exclued!!	
+    	cv::Mat frontImg; //front img after prespective transformation from vertex,1 channel gray img
 
 	//	0 -> small
 	//	1 -> big
@@ -298,7 +298,7 @@ public:
 	*	@Return: 0 for small armor, 1 for big armor
 	*	@Others: API for client
 	*/
-    int getArmorType() const;
+    	int getArmorType() const;
 
 #if defined(DEBUG_DETECTION) || defined(SHOW_RESULT)
 	void showDebugImg() const;
@@ -309,17 +309,17 @@ private:
 	int _enemy_color;
 	int _self_color;
 
-	cv::Rect _roi;		//relative coordinates
+	cv::Rect _roi; //relative coordinates
 
-	cv::Mat _srcImg;	//source img
-	cv::Mat _roiImg;	//roi from the result of last frame
-	cv::Mat _grayImg;	//gray img of roi
+	cv::Mat _srcImg; //source img
+	cv::Mat _roiImg; //roi from the result of last frame
+	cv::Mat _grayImg; //gray img of roi
 
 	int _trackCnt = 0;
 	
 	std::vector<ArmorDescriptor> _armors;
 
-	ArmorDescriptor _targetArmor;		//relative coordinates
+	ArmorDescriptor _targetArmor; //relative coordinates
 
 	int _flag;
 	bool _isTracking;

@@ -1,4 +1,3 @@
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
 # Armor Detection
 ## 1. Algorithm Description
 ### 1.1 Overview
@@ -23,7 +22,10 @@
 >4. 轮廓内的颜色是目标颜色
 
 其中,凸度(Solidity)定义为:
-$$凸度 =\frac{轮廓面积}{拟合椭圆面积}$$
+
+![image](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/Img/CodeCogsEqn.png)  
+S_c : 灯柱轮廓的面积  
+S_f : 外包椭圆的面积  
 判断轮廓内部颜色采用遍历轮廓内部像素点,并统计颜色分布的方法。对矩形内的三通道分别取均值,若B-G > threshold则初步认为这可能是一个蓝色灯条,反之则为红色。最终对符合条件的灯条构建描述。
 #### 1.2.3 灯条匹配
 利用约束集对灯条进行两两匹配,筛选不可能成为装甲板的组合,同时为可能成为装甲板的区域评分。
@@ -35,7 +37,7 @@ $$凸度 =\frac{轮廓面积}{拟合椭圆面积}$$
 
 同一灯条在左右两个方向上可能分别有多个满足约束的匹配,由于每个灯条最终只有可能与另外一个灯条匹配称为装甲板,所以在这一步可以采用“非极大抑制”的思想,只选在满足约束的匹配中距离最近的匹配。
 效果图如下
-[image](http://github.com/itmyhome2013/readme_add_pic/raw/master/images/nongshalie.jpg)
+![image](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/Img/nms.jpg)
 最终为匹配的灯条对,即装甲板构建描述(ArmorDescriptor)。
 #### 1.2.4 装甲板图案识别
 对于已经匹配的灯条，通过透视变换提取装甲板图案的正视图。
