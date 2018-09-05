@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 Authors:	Rick_Hang, <213162574@seu.edu.cn>
-			BinYan Hu
+		BinYan Hu
 **************************************************************/
 #include"ArmorDetector.h"
 #include<iostream>

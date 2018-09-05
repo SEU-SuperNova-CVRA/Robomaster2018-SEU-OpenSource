@@ -218,10 +218,10 @@ public:
 
 public:
 	std::array<cv::RotatedRect, 2> lightPairs; //0 left, 1 right
-	float rotationScore;	//S3 = 
 	float sizeScore;		//S1 = e^(size)
 	float distScore;		//S2 = e^(-offset)
-	float finalScore;		//S3 = -(ratio^2 + yDiff^2)
+	float rotationScore;		//S3 = -(ratio^2 + yDiff^2) 
+	float finalScore;		
 	
 	std::vector<cv::Point2f> vertex;	//four vertex of armor area, lihgt bar area exclued!!	
     cv::Mat frontImg;	//front img after prespective transformation from vertex,1 channel gray img
@@ -283,7 +283,7 @@ public:
 	*	@Return: See enum ArmorFlag
 	*	@Others: API for client
 	*/
-    int detect();
+	int detect();
 
 	/*
 	*	@Brief: get the vertex of armor 

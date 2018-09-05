@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Authors:	Shi Shu, <213162637@seu.edu.cn>
+Authors:    Shi Shu, <213162637@seu.edu.cn>
             BinYan Hu
             Su ChenHao
             Cui RenJie
@@ -36,8 +36,8 @@ Authors:	Shi Shu, <213162637@seu.edu.cn>
 #include<opencv2/opencv.hpp>
 #include<array>
 
-//#define SHOW_PRETREAT						/*to show the process of pretreat*/
-//#define SHOW_FIND_LED						/*to show the process of finding led*/
+//#define SHOW_PRETREAT			    /*to show the process of pretreat*/
+//#define SHOW_FIND_LED			    /*to show the process of finding led*/
 //#define DEBUG_FULL                        /*to show the process of detecting rune*/
 //#define DEBUG_NUM                         /*to show the result of caculating numbers*/
 
@@ -116,25 +116,25 @@ namespace rm
 		}
 	
 
-		int hsv_h_min = 0;							/*¹ıÂËÊ±ºòhÍ¨µÀÑ¡Ôñ±£ÁôµÄ×îĞ¡Öµ*/
-		int hsv_h_max = 34;							/*¹ıÂËÊ±ºòhÍ¨µÀÑ¡Ôñ±£ÁôµÄ×î´óÖµ*/
-		int hsv_s_min = 43;							/*¹ıÂËÊ±ºòsÍ¨µÀÑ¡Ôñ±£ÁôµÄ×îĞ¡Öµ*/
-		int hsv_s_max = 255;						/*¹ıÂËÊ±ºòsÍ¨µÀÑ¡Ôñ±£ÁôµÄ×î´óÖµ*/
-		int hsv_v_min = 150;						/*¹ıÂËÊ±ºòvÍ¨µÀÑ¡Ôñ±£ÁôµÄ×îĞ¡Öµ*/
-		int hsv_v_max = 255;						/*¹ıÂËÊ±ºòvÍ¨µÀÑ¡Ôñ±£ÁôµÄ×î´óÖµ*/
+		int hsv_h_min = 0;					/*è¿‡æ»¤æ—¶å€™hé€šé“é€‰æ‹©ä¿ç•™çš„æœ€å°å€¼*/
+		int hsv_h_max = 34;					/*è¿‡æ»¤æ—¶å€™hé€šé“é€‰æ‹©ä¿ç•™çš„æœ€å¤§å€¼*/
+		int hsv_s_min = 43;					/*è¿‡æ»¤æ—¶å€™sé€šé“é€‰æ‹©ä¿ç•™çš„æœ€å°å€¼*/
+		int hsv_s_max = 255;					/*è¿‡æ»¤æ—¶å€™sé€šé“é€‰æ‹©ä¿ç•™çš„æœ€å¤§å€¼*/
+		int hsv_v_min = 150;					/*è¿‡æ»¤æ—¶å€™vé€šé“é€‰æ‹©ä¿ç•™çš„æœ€å°å€¼*/
+		int hsv_v_max = 255;					/*è¿‡æ»¤æ—¶å€™vé€šé“é€‰æ‹©ä¿ç•™çš„æœ€å¤§å€¼*/
 
-		int contour_min_area = 130;							/*ÂÖÀªÄÚ²¿µÄ×îĞ¡Ãæ»ı*/
-		int contour_boundingrect_min_aspect_ratio = 0.25;	/*ÂÖÀªÍâ°ü¾ØĞÎµÄ×îĞ¡³¤¿í±È*/
-		int contour_boundingrect_max_aspect_ratio = 4;		/*ÂÖÀªÍâ°ü¾ØĞÎµÄ×î´ó³¤¿í±È*/
-		int contour_boundingrect_min_area = 200;			/*ÂÖÀªÍâ°ü¾ØĞÎµÄ×îĞ¡Ãæ»ı*/
-		int contour_boundingrect_max_area = 3000;			/*ÂÖÀªÍâ°ü¾ØĞÎµÄ×î´óÃæ»ı*/
+		int contour_min_area = 130;				/*è½®å»“å†…éƒ¨çš„æœ€å°é¢ç§¯*/
+		int contour_boundingrect_min_aspect_ratio = 0.25;	/*è½®å»“å¤–åŒ…çŸ©å½¢çš„æœ€å°é•¿å®½æ¯”*/
+		int contour_boundingrect_max_aspect_ratio = 4;		/*è½®å»“å¤–åŒ…çŸ©å½¢çš„æœ€å¤§é•¿å®½æ¯”*/
+		int contour_boundingrect_min_area = 200;		/*è½®å»“å¤–åŒ…çŸ©å½¢çš„æœ€å°é¢ç§¯*/
+		int contour_boundingrect_max_area = 3000;		/*è½®å»“å¤–åŒ…çŸ©å½¢çš„æœ€å¤§é¢ç§¯*/
 
-		float y_direction_dx_max_width_rate = 0.5;			/*y·½ÏòÉÏÕÒÁÙ½üÂÖÀªÊ±£¬Á½¸ö¾ØĞÎÏà±È½ÏdxÏà²î»ù×¼¾ØĞÎ¸ß¶ÈµÄ×î´ó±¶Êı*/
-		float y_direction_dy_max_height_rate = 2.5;			/*y·½ÏòÉÏÕÒÁÙ½üÂÖÀªÊ±£¬Á½¸ö¾ØĞÎÏà±È½ÏdyÏà²î»ù×¼¾ØĞÎ¿í¶ÈµÄ×î´ó±¶Êı*/
-		float x_direction_dx_min_height_rate = 1.5;			/*x·½ÏòÉÏÕÒÁÙ½üÂÖÀªÊ±£¬Á½¸ö¾ØĞÎÏà±È½ÏdxÏà²î»ù×¼¾ØĞÎ¸ß¶ÈµÄ×îĞ¡±¶Êı*/
-		float x_direction_dx_max_height_rate = 3.5;			/*x·½ÏòÉÏÕÒÁÙ½üÂÖÀªÊ±£¬Á½¸ö¾ØĞÎÏà±È½ÏdxÏà²î»ù×¼¾ØĞÎ¸ß¶ÈµÄ×î´ó±¶Êı*/
-		float x_direction_dy_max_height_rate = 1.0;			/*x·½ÏòÉÏÕÒÁÙ½üÂÖÀªÊ±£¬Á½¸ö¾ØĞÎÏà±È½ÏdyÏà²î»ù×¼¾ØĞÎ¸ß¶ÈµÄ×î´ó±¶Êı*/
-		float centers_max_sin_theta = 0.30;					/*Á½¸öÂÖÀªÍâ°ü¾ØĞÎÖĞĞÄµãÖ®¼ä¼Ğ½ÇµÄÕıÏÒÖµ*/
+		float y_direction_dx_max_width_rate = 0.5;		/*yæ–¹å‘ä¸Šæ‰¾ä¸´è¿‘è½®å»“æ—¶ï¼Œä¸¤ä¸ªçŸ©å½¢ç›¸æ¯”è¾ƒdxç›¸å·®åŸºå‡†çŸ©å½¢é«˜åº¦çš„æœ€å¤§å€æ•°*/
+		float y_direction_dy_max_height_rate = 2.5;		/*yæ–¹å‘ä¸Šæ‰¾ä¸´è¿‘è½®å»“æ—¶ï¼Œä¸¤ä¸ªçŸ©å½¢ç›¸æ¯”è¾ƒdyç›¸å·®åŸºå‡†çŸ©å½¢å®½åº¦çš„æœ€å¤§å€æ•°*/
+		float x_direction_dx_min_height_rate = 1.5;		/*xæ–¹å‘ä¸Šæ‰¾ä¸´è¿‘è½®å»“æ—¶ï¼Œä¸¤ä¸ªçŸ©å½¢ç›¸æ¯”è¾ƒdxç›¸å·®åŸºå‡†çŸ©å½¢é«˜åº¦çš„æœ€å°å€æ•°*/
+		float x_direction_dx_max_height_rate = 3.5;		/*xæ–¹å‘ä¸Šæ‰¾ä¸´è¿‘è½®å»“æ—¶ï¼Œä¸¤ä¸ªçŸ©å½¢ç›¸æ¯”è¾ƒdxç›¸å·®åŸºå‡†çŸ©å½¢é«˜åº¦çš„æœ€å¤§å€æ•°*/
+		float x_direction_dy_max_height_rate = 1.0;		/*xæ–¹å‘ä¸Šæ‰¾ä¸´è¿‘è½®å»“æ—¶ï¼Œä¸¤ä¸ªçŸ©å½¢ç›¸æ¯”è¾ƒdyç›¸å·®åŸºå‡†çŸ©å½¢é«˜åº¦çš„æœ€å¤§å€æ•°*/
+		float centers_max_sin_theta = 0.30;			/*ä¸¤ä¸ªè½®å»“å¤–åŒ…çŸ©å½¢ä¸­å¿ƒç‚¹ä¹‹é—´å¤¹è§’çš„æ­£å¼¦å€¼*/
 
 	};
 	
@@ -143,79 +143,79 @@ namespace rm
 	public:
         //RuneDetector() {};
         //~RuneDetector() {};
-		enum RuneFlag
-		{
-			RUNE_NO = 0,//Î´Ê¶±ğ³ö
-			RUNE_PART = 1,//¸ø³öÁËÉñ·ûÇøÓòµ«ÊÇÎ´È«²¿¼ì²â³ö
-			RUNE_FULL = 2,//È«²¿¼ì²â³É¹¦
-			SHOOT_NO = 3,//ÏÖÔÚ»¹²»ÄÜ´ò
-            SHOOT_WAIT = 4,//ÒÑ¾­¸ø³öÁË´ò»÷µÄ×ø±êµã£¬µ«»¹Î´·¢Éä,
-			SHOOT_YES = 5,//ÒÑ¾­·¢Éä
-		};
+	enum RuneFlag
+	{
+		RUNE_NO = 0,				//æœªè¯†åˆ«å‡º
+		RUNE_PART = 1,				//ç»™å‡ºäº†ç¥ç¬¦åŒºåŸŸä½†æ˜¯æœªå…¨éƒ¨æ£€æµ‹å‡º
+		RUNE_FULL = 2,				//å…¨éƒ¨æ£€æµ‹æˆåŠŸ
+		SHOOT_NO = 3,				//ç°åœ¨è¿˜ä¸èƒ½æ‰“
+            	SHOOT_WAIT = 4,				//å·²ç»ç»™å‡ºäº†æ‰“å‡»çš„åæ ‡ç‚¹ï¼Œä½†è¿˜æœªå‘å°„,
+		SHOOT_YES = 5,				//å·²ç»å‘å°„
+	};
 
-		/*
-		*	@brief ³õÊ¼»¯£¬ÔØÈë²ÎÊı
-		*/
+	/*
+	*	@brief åˆå§‹åŒ–ï¼Œè½½å…¥å‚æ•°
+	*/
         void init();
 
         /*
-        *	@brief ÔØÈëÍ¼Æ¬
+        *	@brief è½½å…¥å›¾ç‰‡
         */
         void setMode(int runeMode, const RuneParam& runeParam);
 
-		/*
-		*	@brief ÔØÈëÍ¼Æ¬
-		*/
-		cv::Mat loadImg(cv::Mat mat);
+	/*
+	*	@brief è½½å…¥å›¾ç‰‡
+	*/
+	cv::Mat loadImg(cv::Mat mat);
 
-		/*
-		*	@brief ¼ì²âºÍÊ¶±ğ
-		*/
+	/*
+	*	@brief æ£€æµ‹å’Œè¯†åˆ«
+	*/
         int caculate();
 
-		/*
-		*	@brief Ñ¡ÔñÒª»÷´òµÄÉñ·ûÉÏµÄÊı×Ö
-		*/
-		cv::Point2f chooseTarget();
+	/*
+	*	@brief é€‰æ‹©è¦å‡»æ‰“çš„ç¥ç¬¦ä¸Šçš„æ•°å­—
+	*/
+	cv::Point2f chooseTarget();
 
         /*
         *	@brief reset parameters
         */
         void resetPara();
 
-		bool isShoot(bool shootSituation)
+	bool isShoot(bool shootSituation)
+	{
+		isFly_ = shootSituation;
+		if (isFly_ == true)
 		{
-			isFly_ = shootSituation;
-			if (isFly_ == true)
-			{
-				shootFlag_ = SHOOT_YES;
-				return true;
-			}
-			return false;
+			shootFlag_ = SHOOT_YES;
+			return true;
 		}
+		return false;
+	}
 
 		/*
-		*	@brief ¸ø³öflag
+		*	@brief ç»™å‡ºflag
 		*/
         int getFlag() const;
 
 #ifdef DEBUG_GET_EVERYTHING
 		/*
-		*	@brief »ñÈ¡Éñ·ûµÄROIÇøÓò
+		*	@brief è·å–ç¥ç¬¦çš„ROIåŒºåŸŸ
 		*/
 		const cv::Rect getRuneRoi() const;
 
 		/*
-		*	@brief »ñÈ¡¾Å¹¬¸ñµÄÖĞĞÄµã×ø±ê
+		*	@brief è·å–ä¹å®«æ ¼çš„ä¸­å¿ƒç‚¹åæ ‡
 		*/
 		const std::array<cv::Point2f, 9> getCenters() const;
 
 		/*
-		*	@brief »ñÈ¡¾Å¹¬¸ñµÄ9¸öÊı×Ö
+		*	@brief è·å–ä¹å®«æ ¼çš„9ä¸ªæ•°å­—
 		*/
 		const std::array<int, 9> getRuneNumbers() const;
 		/*
-		*	@brief »ñÈ¡LEDµÄ5¸öÊı×Ö
+		*	@brief è·å–LEDçš„5ä¸ªæ•°å­—
 		*/
 		const std::vector<int> getLedNumbers() const;
 
@@ -239,131 +239,131 @@ namespace rm
 				area = parea;
 
 			}
-			cv::Point2f center;						/*ÂÖÀªµÄÍâ°ü¾ØĞÎµÄÖĞĞÄ*/
-			float width;							/*ÂÖÀªµÄÍâ°ü¾ØĞÎµÄ¿í*/
-			float height;							/*ÂÖÀªµÄÍâ°ü¾ØĞÎµÄ¸ß*/
-			float area;								/*ÂÖÀªµÄÃæ»ı¼õÈ¥ÂÖÀªÄÚ²¿ËùÓĞ×ÓÂÖÀªµÄÃæ»ıµÃµ½µÄÃæ»ı*/
-			cv::Point coor = {0, 0};				/*¶ÔÓ¦Í¼Æ×µãµÄÎ»ÖÃ*/
+			cv::Point2f center;						/*è½®å»“çš„å¤–åŒ…çŸ©å½¢çš„ä¸­å¿ƒ*/
+			float width;							/*è½®å»“çš„å¤–åŒ…çŸ©å½¢çš„å®½*/
+			float height;							/*è½®å»“çš„å¤–åŒ…çŸ©å½¢çš„é«˜*/
+			float area;							/*è½®å»“çš„é¢ç§¯å‡å»è½®å»“å†…éƒ¨æ‰€æœ‰å­è½®å»“çš„é¢ç§¯å¾—åˆ°çš„é¢ç§¯*/
+			cv::Point coor = {0, 0};					/*å¯¹åº”å›¾è°±ç‚¹çš„ä½ç½®*/
 		};
 
-        int runeMode_ = 0;								/*ÊÇ´ó·ù»¹ÊÇĞ¡·ù*/
-		RuneParam params_;									/*¸÷Ïî²ÎÊı*/
+        int runeMode_ = 0;								/*æ˜¯å¤§å¹…è¿˜æ˜¯å°å¹…*/
+		RuneParam params_;							/*å„é¡¹å‚æ•°*/
 
 		//TODO: double flags
-		int runeFlag_;											/*ÕÒµ½Éñ·ûÀï¾Å¹¬¸ñµÄÇé¿ö*/
-		int shootFlag_;											/*ÊÇ·ñÄÜ´ò»÷µÄÇé¿ö*/
+		int runeFlag_;								/*æ‰¾åˆ°ç¥ç¬¦é‡Œä¹å®«æ ¼çš„æƒ…å†µ*/
+		int shootFlag_;								/*æ˜¯å¦èƒ½æ‰“å‡»çš„æƒ…å†µ*/
 
-		cv::Mat srcImg_;									/*Ô­Í¼*/
-		cv::Mat workImg_;									/*³ÌĞòÔËĞĞÊ±Ê¹ÓÃµÄÍ¼*/
+		cv::Mat srcImg_;							/*åŸå›¾*/
+		cv::Mat workImg_;							/*ç¨‹åºè¿è¡Œæ—¶ä½¿ç”¨çš„å›¾*/
 		cv::Mat perspMat_;
 		cv::Mat grayImg_;
 		cv::Mat debugImg_;
 		const std::string debugImgName = "debug info";
 
-		std::vector<std::vector<cv::Point>> contours_;		/*findContoursËùÕÒµ½µÄÂÖÀª*/
-		std::vector<cv::Vec4i> hierachy_;					/*findContoursËùÕÒµ½µÄÂÖÀªĞÅÏ¢*/
+		std::vector<std::vector<cv::Point>> contours_;				/*findContoursæ‰€æ‰¾åˆ°çš„è½®å»“*/
+		std::vector<cv::Vec4i> hierachy_;					/*findContoursæ‰€æ‰¾åˆ°çš„è½®å»“ä¿¡æ¯*/
 
-		std::vector<Blob> blobs_;							/*³õ²½É¸Ñ¡ºó±£´æÁôÏÂÂÖÀªµÄÖØÒªĞÅÏ¢*/
-		std::vector<cv::Rect2f> filteredRects_;					/*³õ²½É¸Ñ¡ºóµÄÂÖÀªÍâ°ü¾ØĞÎ*/
-		//std::vector<cv::Rect2f> final_Rects_;				/*¾­¹ıµÚ¶ş´ÎÉ¸Ñ¡ºóÊ£ÏÂµÄÂÖÀªÍâ°ü¾ØĞÎ*/
-		std::vector<Blob> finalBlobs_;						/*¾­¹ıµÚ¶ş´ÎÉ¸Ñ¡ºóÊ£ÏÂµÄÂÖÀªĞÅÏ¢*/
+		std::vector<Blob> blobs_;						/*åˆæ­¥ç­›é€‰åä¿å­˜ç•™ä¸‹è½®å»“çš„é‡è¦ä¿¡æ¯*/
+		std::vector<cv::Rect2f> filteredRects_;					/*åˆæ­¥ç­›é€‰åçš„è½®å»“å¤–åŒ…çŸ©å½¢*/
+		//std::vector<cv::Rect2f> final_Rects_;					/*ç»è¿‡ç¬¬äºŒæ¬¡ç­›é€‰åå‰©ä¸‹çš„è½®å»“å¤–åŒ…çŸ©å½¢*/
+		std::vector<Blob> finalBlobs_;						/*ç»è¿‡ç¬¬äºŒæ¬¡ç­›é€‰åå‰©ä¸‹çš„è½®å»“ä¿¡æ¯*/
 		
-		std::array<cv::Point2f, 9> runeCenters_;			/*Éñ·ûµÄ9¸öÖĞĞÄµã*/
-		std::array<int, 9> runeNumbers_;					/*Éñ·ûµÄ9¸öÊı×Ö*/
-		std::array<int, 9> oldruneNumbers_;					/*Éñ·ûµÄ9¸öÊı×Ö*/
-		std::array<std::pair<cv::Point2f, int>, 9> numbersNcenter_;/*Éñ·ûµÄ9¸öÊı×ÖºÍÖĞĞÄµã*/
-		cv::Rect rune_roi_;									/*Éñ·ûµÄROIÇøÓò*/
+		std::array<cv::Point2f, 9> runeCenters_;				/*ç¥ç¬¦çš„9ä¸ªä¸­å¿ƒç‚¹*/
+		std::array<int, 9> runeNumbers_;					/*ç¥ç¬¦çš„9ä¸ªæ•°å­—*/
+		std::array<int, 9> oldruneNumbers_;					/*ç¥ç¬¦çš„9ä¸ªæ•°å­—*/
+		std::array<std::pair<cv::Point2f, int>, 9> numbersNcenter_;		/*ç¥ç¬¦çš„9ä¸ªæ•°å­—å’Œä¸­å¿ƒç‚¹*/
+		cv::Rect rune_roi_;							/*ç¥ç¬¦çš„ROIåŒºåŸŸ*/
 
-		cv::Rect ledRoi_;									/* ÊıÂë¹ÜËÑË÷ÇøÓò(Ïà¶ÔsrcImg) */		
-		cv::Mat ledImg_;									/* ÊıÂë¹ÜÍ¼Æ¬ Ô­Í¼ÏñÖ±½Ó²Ã¼ôÏÂÀ´µÄ²ÊÉ«Í¼*/	
+		cv::Rect ledRoi_;							/* æ•°ç ç®¡æœç´¢åŒºåŸŸ(ç›¸å¯¹srcImg) */		
+		cv::Mat ledImg_;							/* æ•°ç ç®¡å›¾ç‰‡ åŸå›¾åƒç›´æ¥è£å‰ªä¸‹æ¥çš„å½©è‰²å›¾*/	
 		
-		cv::Mat ledProcessingImg_;							/*ÊıÂë¹Ü²¿·ÖÓÃÓÚ½øĞĞÒ»ÏµÁĞ²Ù×÷µÄÒ»¸ö±äÁ¿*/
-		std::vector<cv::Rect> ledRects_;					/* LED·Ö¸î½á¹û */
-		std::vector<int> runeLedNumbers_;					/*ledµÄ5¸öÊı×Ö*/
-		std::vector<int> oldruneLedNumbers_;				/*ledÉÏ´ÎµÄ5¸öÊı×Ö*/
+		cv::Mat ledProcessingImg_;						/*æ•°ç ç®¡éƒ¨åˆ†ç”¨äºè¿›è¡Œä¸€ç³»åˆ—æ“ä½œçš„ä¸€ä¸ªå˜é‡*/
+		std::vector<cv::Rect> ledRects_;					/* LEDåˆ†å‰²ç»“æœ */
+		std::vector<int> runeLedNumbers_;					/*ledçš„5ä¸ªæ•°å­—*/
+		std::vector<int> oldruneLedNumbers_;					/*ledä¸Šæ¬¡çš„5ä¸ªæ•°å­—*/
 
-		std::list<int> history_;							/*´æ´¢¹ıÈ¥5´ÎLEDµÄ½á¹û*/
-		int led_idx_ = 0;									/*¼ÇÂ¼ÏÖÔÚ´òµÄÊÇÊıÂë¹ÜµÄµÚ¼¸¸öÊı×Ö(·¶Î§0~4)*/
-		std::array<int, 10> vote;								/*¼ÇÂ¼Í¶Æ±½á¹û*/
-		cv::Point2f targetCoor_;									/*¼ÇÂ¼ÏÖÔÚÄ¿±êÔÚ¾Å¹¬¸ñÍ¼Æ×µÄ×ø±ê*/
-		bool isFly_ = false;									/*¼ÇÂ¼×Óµ¯ÊÇ·ñ·¢Éä£¬·¢ÉäÁËÎªtrue*/
+		std::list<int> history_;						/*å­˜å‚¨è¿‡å»5æ¬¡LEDçš„ç»“æœ*/
+		int led_idx_ = 0;							/*è®°å½•ç°åœ¨æ‰“çš„æ˜¯æ•°ç ç®¡çš„ç¬¬å‡ ä¸ªæ•°å­—(èŒƒå›´0~4)*/
+		std::array<int, 10> vote;						/*è®°å½•æŠ•ç¥¨ç»“æœ*/
+		cv::Point2f targetCoor_;						/*è®°å½•ç°åœ¨ç›®æ ‡åœ¨ä¹å®«æ ¼å›¾è°±çš„åæ ‡*/
+		bool isFly_ = false;							/*è®°å½•å­å¼¹æ˜¯å¦å‘å°„ï¼Œå‘å°„äº†ä¸ºtrue*/
 
 		int debug_count_ = 1;
 															
 		/*
-		*	@brief ÅĞ¶ÏÊÇ·ñÊÇ´ó·ù
+		*	@brief åˆ¤æ–­æ˜¯å¦æ˜¯å¤§å¹…
 		*/
 		int isGreatRune(int runeMode);
 
 
 		/*
-		*	@brief ´ÓHSVÍ¼Æ¬ÀïÑ¡È¡×Ô¼ºÏëÒªµÄÑÕÉ«
-		*	@param1 hÍ¨µÀµÄ×îĞ¡Öµ
-		*	@param2 hÍ¨µÀµÄ×î´óÖµ
-		*	@param3 sÍ¨µÀµÄ×îĞ¡Öµ
-		*	@param4 sÍ¨µÀµÄ×î´óÖµ
-		*	@param5 vÍ¨µÀµÄ×îĞ¡Öµ
-		*	@param6 vÍ¨µÀµÄ×î´óÖµ
+		*	@brief ä»HSVå›¾ç‰‡é‡Œé€‰å–è‡ªå·±æƒ³è¦çš„é¢œè‰²
+		*	@param1 hé€šé“çš„æœ€å°å€¼
+		*	@param2 hé€šé“çš„æœ€å¤§å€¼
+		*	@param3 sé€šé“çš„æœ€å°å€¼
+		*	@param4 sé€šé“çš„æœ€å¤§å€¼
+		*	@param5 vé€šé“çš„æœ€å°å€¼
+		*	@param6 vé€šé“çš„æœ€å¤§å€¼
 		*	@information
-		*				yellow channle of HSV
-		*			H¡Ê[26,34] S¡Ê[43,255] V¡Ê[46,255]
+		*		yellow channle of HSV
+		*		Hâˆˆ[26,34] Sâˆˆ[43,255] Vâˆˆ[46,255]
 		*/
 		void chooseColor(int hsv_h_min, int hsv_h_max,
 			int hsv_s_min, int hsv_s_max,
 			int hsv_v_min, int hsv_v_max);
 
 		/*
-		*	@brief ¸ù¾İÂÖÀªÍâ°ü¾ØĞÎµÄ´óĞ¡¡¢Ãæ»ıÒÔ¼°¶şÖµ»¯ºóÂÖÀªÄÚ²¿ºÚµãÕ¼±È³õ²½ÅÅ³ıµô²¿·Ö¾ØĞÎ
+		*	@brief æ ¹æ®è½®å»“å¤–åŒ…çŸ©å½¢çš„å¤§å°ã€é¢ç§¯ä»¥åŠäºŒå€¼åŒ–åè½®å»“å†…éƒ¨é»‘ç‚¹å æ¯”åˆæ­¥æ’é™¤æ‰éƒ¨åˆ†çŸ©å½¢
 		*/
 		void preScreen();
 
 		/*
-		*	@brief ²ÉÓÃÉî¶ÈÓÅÏÈËÑË÷µÄË¼Ïë¶ÔÊ£ÏÂµÄBlob½øĞĞ¹ıÂË£¬
-		*		¶Ô×îºóÊ£ÏÂµÄBlob¹¹½¨Í¼Æ×£¬Í¨¹ı¶ÔÍ¼Æ×ÖĞĞÄµÄÉ¸Ñ¡£¬
-		*		Ñ¡³ö¾Å¹¬¸ñµÄÖĞĞÄ£¬´Ó¶øÈ·¶¨¾Å¹¬¸ñµÄÎ»ÖÃ
+		*	@brief é‡‡ç”¨æ·±åº¦ä¼˜å…ˆæœç´¢çš„æ€æƒ³å¯¹å‰©ä¸‹çš„Blobè¿›è¡Œè¿‡æ»¤ï¼Œ
+		*		å¯¹æœ€åå‰©ä¸‹çš„Blobæ„å»ºå›¾è°±ï¼Œé€šè¿‡å¯¹å›¾è°±ä¸­å¿ƒçš„ç­›é€‰ï¼Œ
+		*		é€‰å‡ºä¹å®«æ ¼çš„ä¸­å¿ƒï¼Œä»è€Œç¡®å®šä¹å®«æ ¼çš„ä½ç½®
 		*/
 		void findRune();
 
 		/*
-		*	@brief Ê¶±ğÊıÂë¹ÜµÄÊı×Ö
+		*	@brief è¯†åˆ«æ•°ç ç®¡çš„æ•°å­—
 		*/
-        const std::vector<int> findLedNumbers();
+        	const std::vector<int> findLedNumbers();
 
 		/*
-		*	@brief 	È«¾Ö×ÔÊÊÓ¦ãĞÖµ
-		*			1.¼ÆËã»Ò¶ÈÖ±·½Í¼
-		*			2.¶Ô»Ò¶ÈÖ±·½Í¼½øĞĞ6´Î¶àÏîÊ½ÄâºÏ
-		*			3.Í¨¹ı²î·ÖµÄ·ûºÅ±ä»¯µÃµ½ÁÁ¶È×î´óµÄ·å
+		*	@brief 	å…¨å±€è‡ªé€‚åº”é˜ˆå€¼
+		*			1.è®¡ç®—ç°åº¦ç›´æ–¹å›¾
+		*			2.å¯¹ç°åº¦ç›´æ–¹å›¾è¿›è¡Œ6æ¬¡å¤šé¡¹å¼æ‹Ÿåˆ
+		*			3.é€šè¿‡å·®åˆ†çš„ç¬¦å·å˜åŒ–å¾—åˆ°äº®åº¦æœ€å¤§çš„å³°
 		*			
-		*	¿ÉÒÔ¿¼ÂÇ¶Ô²»Í¬µÄÇé¿öÓÃ²»Í¬´ÎÊıµÄ¶àÏîÊ½ÄâºÏ£¬6´Î±È½ÏÊÊºÏÖ±·½Í¼ÓĞ×óÖĞÓÒÈı¸ö·åµÄÇé¿ö
+		*	å¯ä»¥è€ƒè™‘å¯¹ä¸åŒçš„æƒ…å†µç”¨ä¸åŒæ¬¡æ•°çš„å¤šé¡¹å¼æ‹Ÿåˆï¼Œ6æ¬¡æ¯”è¾ƒé€‚åˆç›´æ–¹å›¾æœ‰å·¦ä¸­å³ä¸‰ä¸ªå³°çš„æƒ…å†µ
 		*/
 		int findLEDThreshold(const cv::Mat & gray);
 
 		/*
-		*	@brief ÊıÂëÊı×ÖÊ¶±ğ£¬ÊäÈëÎªÊıÂëÊı×ÖÍ¼Æ¬£¬ºÚµ×°××Ö
+		*	@brief æ•°ç æ•°å­—è¯†åˆ«ï¼Œè¾“å…¥ä¸ºæ•°ç æ•°å­—å›¾ç‰‡ï¼Œé»‘åº•ç™½å­—
 		*/
 		int trans2RealLedNum(const cv::Mat& dframe_count);
 
 		/*
-		*	@brief ÇĞ¸îledImg_£¬µÃµ½¶ÀÁ¢µÄÊı×ÖÇøÓò
+		*	@brief åˆ‡å‰²ledImg_ï¼Œå¾—åˆ°ç‹¬ç«‹çš„æ•°å­—åŒºåŸŸ
 		*/
-        void getLedImg();
+        	void getLedImg();
 
 		
 		/*
-		*	@brief Ñ°ÕÒÉñ·û
+		*	@brief å¯»æ‰¾ç¥ç¬¦
 		*/
 		void  detect();
 
 		/*
-		*	@brief ·Ö¸îºÍÊ¶±ğÊı×Ö
+		*	@brief åˆ†å‰²å’Œè¯†åˆ«æ•°å­—
 		*/
 		void recognize();
 
-		/*½«Òª´òµÄÊı×Ö¼ÇÂ¼µ½history_ÖĞ£¬1-9¼ÇÂ¼³É¹¦£¬-1¼ÇÂ¼Ê§°Ü*/
+		/*å°†è¦æ‰“çš„æ•°å­—è®°å½•åˆ°history_ä¸­ï¼Œ1-9è®°å½•æˆåŠŸï¼Œ-1è®°å½•å¤±è´¥*/
 		bool setRecord(int record);
 
-		/*Ñ¡ÔñÒª»÷´òµÄÊı×Ö*/
+		/*é€‰æ‹©è¦å‡»æ‰“çš„æ•°å­—*/
 		int chooseNumber();
 
 
