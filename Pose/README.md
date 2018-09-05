@@ -30,7 +30,7 @@
 通过将视觉获取的N个点的坐标，和这些点在已知的三位模型中的坐标对比，接触目标物体相对于摄像头的位姿。这个位姿是用一个旋转矩阵和一个位移矩阵表达的。Opencv中有该函数。
 下图为cv：：solvePnP的函数原型。
 
-![](imgs/20180905-161432.png)
+![image](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/Img/pnp.png)
 
 ### 1.5 补偿
 由于重力影响，需要在y轴方向进行重力补偿，这一部分在const cv::Vec2f AngleSolver::getCompensateAngle()里实现。
