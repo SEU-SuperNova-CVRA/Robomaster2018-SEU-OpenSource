@@ -1,3 +1,23 @@
+/**************************************************************
+MIT License
+Copyright (c) 2018 SEU-SuperNova-CVRA
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+Authors:	Florentino Zhang, <danteseu@126.com>
+**************************************************************/
 #pragma once
 #include "opencv2/core/core.hpp"
 #include<iostream>
@@ -10,9 +30,9 @@ namespace rm
 
 struct AngleSolverParam
 {
-	cv::Mat CAM_MATRIX;			// 
-	cv::Mat DISTORTION_COEFF;	//相机畸变参数
-	//三维坐标的单位是毫米 
+	cv::Mat CAM_MATRIX;			//Camera Matrix
+	cv::Mat DISTORTION_COEFF;	//Distortion matrix
+	//the unit of vector is mm
 	static std::vector<cv::Point3f> POINT_3D_OF_ARMOR_BIG;
 	static std::vector<cv::Point3f> POINT_3D_OF_ARMOR_SMALL;
 	static std::vector<cv::Point3f> POINT_3D_OF_RUNE;
@@ -21,8 +41,8 @@ struct AngleSolverParam
 	double GUARD_HIGHT = 4000;
 
 	/*
-	* @brief 设置相机参数
-	* @param Input int id 1-4对应相应摄像头，5对应官方图传，0对应测试用双目摄像头左目
+	* @brief set the params of camera
+	* @param Input int id is the id of camera.you should write a xml including your camera's params.
 	*/
 	void readFile(const int id);
 };
@@ -44,24 +64,24 @@ public:
 
 	enum AngleFlag
 	{
-		ANGLE_ERROR = 0,                //计算错误
-		ONLY_ANGLES = 1,				//只能得到角度信息
-		TOO_FAR = 2,					//距离太远，距离可能不准确
-		ANGLES_AND_DISTANCE = 3			//角度和距离都准确
+		ANGLE_ERROR = 0,                //an error appeared in angle solution
+		ONLY_ANGLES = 1,		//only angles is avilable
+		TOO_FAR = 2,			//the distance is too far, only angles is avilable
+		ANGLES_AND_DISTANCE = 3		//distance and angles are all avilable and correct
 	};
 
 	
 	/*
-	* @brief 设置二维装甲板点,可以接受中心坐标也可以接受四角坐标
+	* @brief set the 2D center point or corners of armor, or the center of buff as target 
 	* @param Input armorPoints/centerPoint
 	*/
-	void setTarget(const std::vector<cv::Point2f> objectPoints, int objectType);  //设置二维装甲板或神符点
-	void setTarget(const cv::Point2f centerPoint, int objectType);//赋值中心点坐标
-	//void setTarget(const std::vector<cv::Point2f> runePoints);  //设置二维神符点
+	void setTarget(const std::vector<cv::Point2f> objectPoints, int objectType);  //set corner points for PNP
+	void setTarget(const cv::Point2f centerPoint, int objectType);//set center points
+	//void setTarget(const std::vector<cv::Point2f> runePoints);  //set rune center points
 															
 
 	/*
-	* @brief 根据选定的算法类型解算角度
+	* @brief slove the angle by selected algorithm
     */
 	AngleFlag solve();
 
@@ -77,78 +97,78 @@ public:
 	void compensateGravity();
 
 	/*
-	* @brief 设置给出图像分辨率
+	* @brief tell anglesolver the resolution of used image
 	*/
 	void setResolution(const cv::Size2i& image_resolution);
 
 	/*
-	* @brief 设置运行程序的车辆种类，0代表哨兵，1代表步兵，2代表英雄；
+	* @brief set the type of the robot, 0 means gurad, 1 means infantry, 2 means hero
 	*/
 	void setUserType(int usertype);
 
 	/*
-	* @brief 设置敌人类型，0代表小装甲板，1代表大装甲板；
+	* @brief set the type of enemy, 0 means enemy has big armor, 1 means small armor.
 	*/
 	void setEnemyType(int enemytype);
 
 	/*
-	* @brief 设置子弹速度；
+	* @brief set the speed of bullet
 	*/
 	void setBulletSpeed(int bulletSpeed);
 
 	/*
-	* @brief 显示解算的角度结果
+	* @brief get the angle solved
 	*/
 	const cv::Vec2f getAngle();
 
 	/*
-	* @brief 进行重力补偿
+	* @brief get the error angle after compensated by the consider of gravity 
 	*/
 	//const cv::Vec2f getCompensateAngle();
 
     //const cv::Vec2f getPredictedAngle();
 
 	/*
-	* @brief 显示解算的距离结果，仅用PNP时
+	* @brief get the distance between the camera and the target
 	*/
     double getDistance();
 
 #ifdef DEBUG
 	/*
-	* @brief展示装甲板四角的二维坐标
+	* @brief show 2d points of armor 
 	*/
 	void showPoints2dOfArmor();
 
 	/*
-	* @brief 展示输出矩阵
+	* @brief show tvec 
 	*/
 	void showTvec();
 
 	/*
-	* @brief 输出角度和欧氏距离
+	* @brief show distance
 	*/
 	void showEDistance();
 
 	/*
-	* @brief 输出装甲板中心坐标
+	* @brief show center of armor
 	*/
 	void showcenter_of_armor();
 
 	/*
-	* @brief 显示解算角度结果
+	* @brief show angles
 	*/
 	void showAngle();
 
 	/*
-	* @brief 返回算法信息
+	* @brief show the information of selected algorithm
 	*/
 	int showAlgorithm();
 #endif // DEBUG
 
 private:
 	AngleSolverParam _params;
-	cv::Mat _rVec = cv::Mat::zeros(3, 1, CV_64FC1);//初始化输出矩阵 
-	cv::Mat _tVec = cv::Mat::zeros(3, 1, CV_64FC1);//初始化输出矩阵
+	cv::Mat _rVec = cv::Mat::zeros(3, 1, CV_64FC1);//init rvec
+	cv::Mat _tVec = cv::Mat::zeros(3, 1, CV_64FC1);//init tvec
 	std::vector<cv::Point2f> point_2d_of_armor;
 	std::vector<cv::Point2f> point_2d_of_rune;
 	enum solverAlg
@@ -161,12 +181,12 @@ private:
 	std::vector<cv::Point2f> target_nothing;
 	double _xErr, _yErr, _euclideanDistance;
 	cv::Size2i image_size = cv::Size2i(1920, 1080);
-	int user_type = 1;//运行程序的车辆种类，0代表哨兵，1代表步兵，2代表英雄；
-	int enemy_type = 1;//敌人类型，0代表小装甲板，1代表大装甲板；
+	int user_type = 1;
+	int enemy_type = 1;
 	double _bullet_speed = 22000;
 	double _rune_compensated_angle = 0;
 	int is_shooting_rune = 0;
-	cv::Mat _cam_instant_matrix;// 相机内参
+	cv::Mat _cam_instant_matrix;// a copy of camera instant matrix
     //std::vector<cv::Point2f> _x_time_points;
 	//std::vector<cv::Point2f> _y_time_points;
 	//int framecount=0;
