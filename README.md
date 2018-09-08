@@ -5,7 +5,15 @@ This is basically the code we use during the competition.
 
 If you have any problem, welcome to contact us: 213162574@seu.edu.cn
 
-## 1.Project framework
+## 1.Requirements
+### platform:
+>1. Jetson TX2
+>2. ubuntu16.04
+### environment
+>1. QT5
+>2. OpenCV3.4.0(Opencv4Tegra)
+
+## 2.Project framework
 
 **Armor**,**Rune**&**Pose**: three core algorithm are implemented here. You can read the document under these three directory.
 
@@ -20,13 +28,7 @@ If you have any problem, welcome to contact us: 213162574@seu.edu.cn
 **Main**: entry of the program.
 
 **Img**: resource files for document
-## 2.Requirements
-### platform:
->1. Jetson TX2
->2. ubuntu16.04
-### environment
->1. QT5
->2. OpenCV3.4.0(Opencv4Tegra)
+
 
 ## 3.Configuration
 ### 1. Clone the project
