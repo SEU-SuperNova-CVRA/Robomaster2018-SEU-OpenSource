@@ -67,6 +67,6 @@ Be sure to change the content (Directory of executable file and so on) for your 
 Add this script to the **Startup Applications** and everything is okay now!
 
 
-**License**
+## 5.License
 
 [MIT License](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/LICENSE)
