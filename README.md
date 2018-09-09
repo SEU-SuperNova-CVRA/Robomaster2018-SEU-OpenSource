@@ -57,6 +57,7 @@ If you meet any other errors, remeber to check the directory in the project(espe
 ## 4.How To Run
 After successfully compile the whole project in QT, you shall check the executable file `Robomaster2018-SEU-OpenSource` produced by QT(under the `./Release` or `./Debug` directory). Excute it, and you can see the result.
 
+
 **Auto Startup**
 
 Also, we add the script `rm.sh` for the Startup Application.
@@ -64,3 +65,8 @@ Also, we add the script `rm.sh` for the Startup Application.
 Be sure to change the content (Directory of executable file and so on) for your own machine. Also, DON'T forget to add the darknet.so(produced after compiling this lib) to the same directory of executable file
 
 Add this script to the **Startup Applications** and everything is okay now!
+
+
+**License**
+
+[MIT License](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/LICENSE)
