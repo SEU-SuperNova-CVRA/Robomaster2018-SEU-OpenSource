@@ -517,7 +517,7 @@ bool ArmorDescriptor::isArmorPattern() const
 	
 	// to test the svm, uncomment the code block above
 	// and comment the code below
-	return true
+	return true;
 }
 
 
