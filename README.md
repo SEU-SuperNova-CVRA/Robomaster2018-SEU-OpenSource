@@ -1,9 +1,7 @@
 # Robomaster2018-SEU-OpenSource
-This is the open source project for Robomaster 2018 from Southeast University which includes complete process to finish the auto-shoot & rune detection tasks. Armor detection, rune detection, angle solving algorithm & drivers, serial communication are all included.
+This is a project for Robomaster 2018 from Southeast University which includes complete process to finish the auto-shoot & rune detection tasks. Armor detection, rune detection, angle solving algorithm & drivers, serial communication are all included.
 
 This is basically the code we use during the competition.
-
-If you have any problem, welcome to contact us: 213162574@seu.edu.cn
 
 ## 1.Requirements
 ### platform:
