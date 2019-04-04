@@ -68,3 +68,7 @@ Add this script to the **Startup Applications** and everything is okay now!
 ## 5.License
 
 [MIT License](https://github.com/SEU-SuperNova-CVRA/Robomaster2018-SEU-OpenSource/blob/master/LICENSE)
+
+## 6.Contributors
+
+BINYAN HU, CHENGHAO SU, BOWEN SUN, HANG ZHOU, SHU SHI, JIHAN ZHANG, YIRAN FANG.
